@@ -1,9 +1,5 @@
 package com.item.tracker.api.model;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-import java.util.List;
-
 /**
  *
  * {
@@ -18,12 +14,12 @@ import java.util.List;
  * }
  */
 
-public class ItemMessage {
+public class Item {
     private String itemId;
     private String itemType;
     private String itemManf;
     private String itemState;
-    private List<LatLong> itemLocation;
+    private LatLong itemLocation;
 
     public String getItemId() {
         return itemId;
@@ -49,11 +45,11 @@ public class ItemMessage {
         this.itemState = itemState;
     }
 
-    public List<LatLong> getItemLocation() {
+    public LatLong getItemLocation() {
         return itemLocation;
     }
 
-    public void setItemLocation(List<LatLong> itemLocation) {
+    public void setItemLocation(LatLong itemLocation) {
         this.itemLocation = itemLocation;
     }
 
@@ -67,7 +63,7 @@ public class ItemMessage {
 
     @Override
     public String toString() {
-        return "ItemMessage{" +
+        return "Item{" +
                 "itemId='" + itemId + '\'' +
                 ", itemType='" + itemType + '\'' +
                 ", itemManf='" + itemManf + '\'' +
