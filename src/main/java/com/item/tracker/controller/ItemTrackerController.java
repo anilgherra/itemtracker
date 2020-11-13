@@ -18,7 +18,9 @@ public class ItemTrackerController {
     @Autowired
     private ItemService itemService;
 
-    /** {@inheritDoc} */
+    /**
+     * Request to create item records.
+     */
     @POST
     @Path("/item")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
@@ -31,7 +33,9 @@ public class ItemTrackerController {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Request to get all items.
+     */
     @GET
     @Path("/item")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
@@ -43,7 +47,9 @@ public class ItemTrackerController {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Request to get an item based on its id.
+     */
     @GET
     @Path("/item/{itemId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
