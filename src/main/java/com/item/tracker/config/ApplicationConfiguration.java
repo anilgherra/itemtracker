@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @EnableWebMvc
 public class ApplicationConfiguration {

@@ -1,7 +1,9 @@
 package com.item.tracker.controller;
 
-import com.item.tracker.api.model.Item;
+import com.item.tracker.api.entity.Item;
+import com.item.tracker.api.model.ItemDto;
 import com.item.tracker.api.service.ItemService;
+import com.item.tracker.config.GenericExceptionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,47 +12,51 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @RestController
-@Path("/item")
+@Path("/api/v1")
 public class ItemTrackerController {
 
     @Autowired
     private ItemService itemService;
 
-
+    /** {@inheritDoc} */
     @POST
-    @Path("/updateItem")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response createItemMessage(Item item) {
-        boolean isProcessed = itemService.processItemRequest(item);
-
-        if(isProcessed) {
+    @Path("/item")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
+    public Response createItem(ItemDto itemDto) {
+        try {
+            itemService.processItemRequest(itemDto);
             return Response.ok().build();
-        } else
-            return Response.serverError().build();
+        } catch(Exception e) {
+            return new GenericExceptionMapper().toResponse(e);
+        }
     }
 
-    /**
-     * Method returns all the items in database.
-     * @return returns all items response.
-     */
+    /** {@inheritDoc} */
     @GET
-    @Path("/getItem")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/item")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
     public Response getItems() {
-        return Response.ok().status(200).entity(itemService.getItems()).build();
+        try{
+            return Response.ok().status(200).entity(itemService.getItems()).build();
+        } catch(Exception e) {
+            return new GenericExceptionMapper().toResponse(e);
+        }
     }
 
-    /**
-     * Method returns all the items in database.
-     * @return items response
-     */
+    /** {@inheritDoc} */
     @GET
-    @Path("/getItem/{itemId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getItems(@PathParam("itemId") String itemId) {
-       return Response.ok().status(200).entity(itemService.getItem(itemId)).build();
+    @Path("/item/{itemId}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
+    public Response getItem(@PathParam("itemId") long itemId) {
+        Item item;
+        try {
+            item = itemService.getItem(itemId);
+        } catch(Exception e) {
+            return new GenericExceptionMapper().toResponse(e);
+        }
+        if(item == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Unable to find an item resource with item id: " + itemId).build();
+        }
+       return Response.ok().status(200).entity(item).build();
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.ApplicationPath;
 
 @Component
-@ApplicationPath("/api/v1")
+@ApplicationPath("itemtracker")
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {

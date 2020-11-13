@@ -1,6 +1,7 @@
 package com.item.tracker.api.service;
 
-import com.item.tracker.api.model.Item;
+import com.item.tracker.api.entity.Item;
+import com.item.tracker.api.model.ItemDto;
 
 import java.util.List;
 
@@ -12,21 +13,20 @@ import java.util.List;
 public interface ItemService {
     /**
      * Method to process an item request.
-     * @param item item
-     * @return true if processed or false
+     * @param itemDto item
      */
-    public boolean processItemRequest(Item item);
+     void processItemRequest(ItemDto itemDto);
 
     /**
      * Get list of all items.
      * @return get all the items.
      */
-    public List<Item> getItems();
+     List<Item> getItems();
 
     /**
      * Get a specific item.
-     * @return
+     * @return an item object
      */
-    public Item getItem(String itemId);
+    Item getItem(long itemId);
 
 }
