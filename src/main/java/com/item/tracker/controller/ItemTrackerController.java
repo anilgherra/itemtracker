@@ -57,11 +57,11 @@ public class ItemTrackerController {
         Item item;
         try {
             item = itemService.getItem(itemId);
+            if(item == null) {
+                return Response.status(Response.Status.NOT_FOUND).entity("Unable to find an item resource with item id: " + itemId).build();
+            }
         } catch(Exception e) {
             return new GenericExceptionMapper().toResponse(e);
-        }
-        if(item == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Unable to find an item resource with item id: " + itemId).build();
         }
        return Response.ok().status(200).entity(item).build();
     }
